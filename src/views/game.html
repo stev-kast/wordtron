@@ -1,0 +1,180 @@
+<head>
+    <script src="https://kit.fontawesome.com/f12d724fca.js" crossorigin="anonymous"></script>
+</head>
+
+<div class="game">
+    <div class="general-grid">
+        <div class="cell">
+            <div class="head">
+                <i class="fa-solid fa-info"></i>
+                <i class="fa-solid fa-question"></i>
+                <h1>WORLDTRON</h1>
+                <i class="fa-solid fa-bars-progress"></i>
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
+        </div>
+
+        <div class="border"></div>
+
+        <div class="cell">
+            <div class="words-grid">
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+                <div class="letter-cell"></div>
+            </div>
+        </div>
+
+        <div class="cell keyboard">
+            <div class="keyboard-grid">
+                <div class="keyboard-row">
+                    <button class="key-cell">Q</button>
+                    <button class="key-cell">W</button>
+                    <button class="key-cell">E</button>
+                    <button class="key-cell">R</button>
+                    <button class="key-cell">T</button>
+                    <button class="key-cell">Y</button>
+                    <button class="key-cell">U</button>
+                    <button class="key-cell">I</button>
+                    <button class="key-cell">O</button>
+                    <button class="key-cell">P</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="key-cell">A</button>
+                    <button class="key-cell">S</button>
+                    <button class="key-cell">D</button>
+                    <button class="key-cell">F</button>
+                    <button class="key-cell">G</button>
+                    <button class="key-cell">H</button>
+                    <button class="key-cell">J</button>
+                    <button class="key-cell">K</button>
+                    <button class="key-cell">L</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="key-cell">ENTER</button>
+                    <button class="key-cell">Z</button>
+                    <button class="key-cell">X</button>
+                    <button class="key-cell">C</button>
+                    <button class="key-cell">V</button>
+                    <button class="key-cell">B</button>
+                    <button class="key-cell">N</button>
+                    <button class="key-cell">M</button>
+                    <i class="fa-solid fa-delete-left key-cell"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .game {
+        font-family: 'Courier New', monospace;
+        max-width: 32rem;
+        margin: 0 auto;
+        height: 98%;
+        max-height: 100%;
+    }
+
+    .general-grid {
+        height: 100%;
+        max-height: 100%;
+        display: grid;
+        grid-template-rows: auto 1fr;
+    }
+
+    .head {
+        width: 90%;
+        margin: 0 auto;
+        align-self: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .head i {
+        margin-top: 0.5em;
+    }
+
+    .border {
+        height: 0;
+        border: 1px solid #d3d3d3;
+    }
+
+    h1 {
+        margin: 0;
+        text-align: center;
+    }
+
+    .words-grid {
+        width: 80%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(5, 5em);
+        grid-auto-rows: auto;
+    }
+
+    .letter-cell {
+        position: relative;
+        width: 4em;
+        height: 3.5em;
+        margin: 0.3em auto;
+        text-align: center;
+        border: 2px solid #d3d3d3;
+    }
+
+    .keyboard-grid {
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 1em;
+        bottom: 0;
+    }
+
+    .keyboard-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .key-cell {
+        margin: 0.2em;
+        padding: 0.4em 1.2em;
+        width: fit-content;
+        height: 4em;
+        text-align: center;
+        background-color: #d3d3d3;
+        border: 1px solid #d3d3d3;
+        border-radius: 3px;
+    }
+
+    i.key-cell {
+        height: 1.7em;
+        padding-top: 1em;
+    }
+</style>

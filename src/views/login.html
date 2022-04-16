@@ -1,0 +1,86 @@
+<div id="card">
+    <div id="card-content">
+        <div id="card-title">
+            <h2>LOGIN</h2>
+        </div>
+        <form method="" class="form">
+            <label for="username" class="form-content">
+                &nbsp;Username
+            </label>
+            <input id="username" class="form-content" type="text" last-name="username" autocomplete="on" required />
+            <div class="form-border"></div>
+            <label for="user-password" class="form-content">&nbsp;Password
+            </label>
+            <input id="user-password" class="form-content" type="password" name="password" required />
+            <div class="form-border"></div>
+            <input id="submit-btn" type="submit" name="submit" value="LOGIN" />
+            <a href="#" id="signup">Don't have account yet?</a>
+        </form>
+    </div>
+</div>
+<style>
+    a {
+        text-decoration: none;
+    }
+
+    body {
+        background: #6aaa64;
+    }
+
+    #forgot-pass {
+        color: #6aaa64;
+    }
+
+    #card {
+        background: #fbfbfb;
+        border-radius: 8px;
+        box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
+        height: 350px;
+        width: 350px;
+        margin: 100px auto;
+    }
+
+    #card-content {
+        padding: 12px 44px;
+    }
+
+    #card-title {
+        text-align: center;
+    }
+
+    #signup {
+        color: #6aaa64;
+        text-align: center;
+    }
+
+    #submit-btn {
+        background: #6aaa64;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        color: white;
+        height: 40px;
+        margin: 0 auto;
+        margin-top: 50px;
+        width: 150px;
+    }
+
+    .form {
+        align-items: left;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-border {
+        background: #6aaa64;
+        height: 1px;
+        width: 100%;
+    }
+
+    .form-content {
+        background: #fbfbfb;
+        border: none;
+        outline: none;
+        padding-top: 14px;
+    }
+</style>
