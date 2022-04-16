@@ -27,12 +27,14 @@ app.on("ready", () => {
   ventanaPrincipal = new BrowserWindow({
     // Hiddes menu bar and can be shown with alt key
     autoHideMenuBar: true,
+    width: 400,
+    height: 380,
   });
   //TODO: Look how to change title on each window
   // Carga del archivo index.html en la ventana
   ventanaPrincipal.loadURL(
     url.format({
-      pathname: path.join(__dirname, "views/game.html"),
+      pathname: path.join(__dirname, "views/login.html"),
       protocol: "file",
       slashes: true,
     })
