@@ -85,7 +85,7 @@ document.addEventListener("keydown", (e) => {
       for (let i = active_row * 5; i < active_row * 5 + 5; i++) {
         input = input + cells[i].children[0].innerHTML;
       }
-      verify_word(input, word);
+      verify_word(input, word); //
     }
   }
 });
