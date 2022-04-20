@@ -81,6 +81,10 @@ app.on("ready", async () => {
     e.sender.destroy();
     openGame();
   });
+  // Escucha el evento abrir ventana de Game
+  ipcMain.on("openStatics", (e, data) => {
+    openStatics();
+  });
   // Carga el menu de un template
   const menuPrincipal = Menu.buildFromTemplate(templateMenu);
   Menu.setApplicationMenu(menuPrincipal);
@@ -158,6 +162,25 @@ const openGame = async () => {
   gameWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, "views/game.html"),
+      protocol: "file",
+      slashes: true,
+    })
+  );
+};
+
+const openStatics = async () => {
+  gameWindow = new BrowserWindow({
+    // Hiddes menu bar and can be shown with alt key
+    autoHideMenuBar: true,
+    width: 420,
+    height: 450,
+    title: "My Stats",
+    webPreferences: { nodeIntegration: true, contextIsolation: false },
+  });
+  // Carga del archivo index.html en la ventana
+  gameWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, "views/statics.html"),
       protocol: "file",
       slashes: true,
     })

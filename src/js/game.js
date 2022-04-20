@@ -19,7 +19,10 @@ document.getElementById("logOut").addEventListener("click", function (e) {
 document.getElementById("new-game").addEventListener("click", function (e) {
   location.reload();
 });
-
+document.getElementById("statics").addEventListener("click", function (e) {
+  e.preventDefault();
+  ipcRenderer.send("openStatics");
+});
 document.getElementsByName("delete")[0].addEventListener("click", (e) => {
   let cells = document.getElementsByClassName("letter-cell");
   cells = Object.values(cells);
@@ -45,6 +48,47 @@ document.getElementsByName("enter")[0].addEventListener("click", (e) => {
     verify_word(input, word);
   }
 });
+
+document.addEventListener("keydown", (e) => {
+  if (isALetter(e.key) && e.key.length === 1) {
+    let letter = e.key.toUpperCase();
+
+    let cells = document.getElementsByClassName("letter-cell");
+    cells = Object.values(cells);
+    for (let i = 0; i < cells.length; i++) {
+      if (cells[i].children[0].innerHTML === "" && letter_count < 5) {
+        cells[i].children[0].innerHTML = letter;
+        letter_count++;
+        return true;
+      }
+    }
+  }
+  if (e.key === "Backspace") {
+    let cells = document.getElementsByClassName("letter-cell");
+    cells = Object.values(cells);
+    let finder = active_row * 5 - 1;
+    if (active_row < 6) {
+      for (let i = 5; i > 0; i--) {
+        if (cells[finder + i].children[0].innerHTML !== "") {
+          cells[finder + i].children[0].innerHTML = "";
+          letter_count--;
+          return true;
+        }
+      }
+    }
+  }
+  if (e.key === "Enter") {
+    let cells = document.getElementsByClassName("letter-cell");
+    cells = Object.values(cells);
+    let input = "";
+    if (active_row < 6) {
+      for (let i = active_row * 5; i < active_row * 5 + 5; i++) {
+        input = input + cells[i].children[0].innerHTML;
+      }
+      verify_word(input, word);
+    }
+  }
+});
 // ---------------- Hace que cada key ingrese su valor en el grid del juego
 let keys = document.getElementsByName("key");
 keys = Object.values(keys);
@@ -62,6 +106,9 @@ keys.map((key) => {
   });
 });
 // ----------------------------------------------------------------
+function isALetter(char) {
+  return /[a-zA-Z]/.test(char);
+}
 const readUsers = async () => {
   if (fs.existsSync(link)) {
     let archivo = fs.readFileSync(link, "utf8");
@@ -130,7 +177,7 @@ const compare_words = async (input, word) => {
       }
       // ----------
       game_cells.push([input.charAt(j), 0]);
-      let ind = keyboard.findIndex((e) => e[0] === input.charAt(j));
+      let ind = keyboard.findIndex((e) => e[0] == input.charAt(j));
       // Si la letra en la posicion j de input es igual a la letra en la posicion j de word se guarda como un 0
       keyboard[ind][1] = 0;
       wordChecker++;
@@ -175,8 +222,10 @@ const compare_words = async (input, word) => {
     active_row = 7;
     letter_count = 6;
     alert("Word Found!");
+  } else if (active_row == 5) {
+    alert("Game Over! \nWord: " + word);
+    saveStatics(active_row + 1);
   }
-
   active_row++;
   letter_count = 0;
 };

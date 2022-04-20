@@ -1,3 +1,76 @@
-<div>
-    <h3>STATICS</h3>
+<script src="../js/statics.js" defer></script>
+
+<div class="container">
+    <div class="cell">
+        <h3>STATICS</h3>
+    </div>
+    <div class="cell statics-row">
+        <div class="half">
+            <div id="games-played" class="bigText"></div>
+            <div>Games Played</div>
+        </div>
+        <div class="half">
+            <div id="winrate" class="bigText"></div>
+            <div>Winrate</div>
+        </div>
+    </div>
+    <div class="cell">
+        <h3>WINRATE DISTRIBUTION</h3>
+    </div>
+    <div class="cell">
+        <div id="percentages" class="percentages">
+        </div>
+    </div>
+    <div class="cell"> </div>
+
 </div>
+
+
+<style>
+    .container {
+        padding-top: 0.3em;
+        font-family: 'Courier New', monospace;
+        text-align: center;
+        width: 400px;
+        margin: auto;
+    }
+
+    .statics-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .half {
+        width: 50%;
+    }
+
+    .bigText {
+        font-size: 2em;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        padding: 0.5em 0;
+    }
+
+    .index {
+        font-size: .9em;
+        padding-top: 0.2em;
+    }
+
+    .bar {
+        background-color: #86888a;
+        padding-top: 0.2em;
+        padding-right: 0.5em;
+        font-weight: bold;
+        color: #fff;
+        text-align: right;
+    }
+
+    .highlight {
+        background-color: #6aaa64;
+    }
+</style>
