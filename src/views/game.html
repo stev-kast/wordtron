@@ -1,16 +1,17 @@
 <head>
     <script src="https://kit.fontawesome.com/f12d724fca.js" crossorigin="anonymous"></script>
+    <script src="../js/game.js" defer></script>
 </head>
 
 <div class="game">
     <div class="general-grid">
         <div class="cell">
             <div class="head">
+                <i class="fa-solid fa-arrow-rotate-right"></i>
                 <i class="fa-solid fa-info"></i>
-                <i class="fa-solid fa-question"></i>
-                <h1>WORLDTRON</h1>
+                <h1>WORDTRON</h1>
                 <i class="fa-solid fa-bars-progress"></i>
-                <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket" id="logOut"></i>
             </div>
         </div>
 
@@ -18,74 +19,134 @@
 
         <div class="cell">
             <div class="words-grid">
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
-                <div class="letter-cell"></div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
+                <div class="letter-cell">
+                    <h1></h1>
+                </div>
             </div>
         </div>
 
         <div class="cell keyboard">
             <div class="keyboard-grid">
                 <div class="keyboard-row">
-                    <button class="key-cell">Q</button>
-                    <button class="key-cell">W</button>
-                    <button class="key-cell">E</button>
-                    <button class="key-cell">R</button>
-                    <button class="key-cell">T</button>
-                    <button class="key-cell">Y</button>
-                    <button class="key-cell">U</button>
-                    <button class="key-cell">I</button>
-                    <button class="key-cell">O</button>
-                    <button class="key-cell">P</button>
+                    <button class="key-cell" name="key">Q</button>
+                    <button class="key-cell" name="key">W</button>
+                    <button class="key-cell" name="key">E</button>
+                    <button class="key-cell" name="key">R</button>
+                    <button class="key-cell" name="key">T</button>
+                    <button class="key-cell" name="key">Y</button>
+                    <button class="key-cell" name="key">U</button>
+                    <button class="key-cell" name="key">I</button>
+                    <button class="key-cell" name="key">O</button>
+                    <button class="key-cell" name="key">P</button>
                 </div>
                 <div class="keyboard-row">
-                    <button class="key-cell">A</button>
-                    <button class="key-cell">S</button>
-                    <button class="key-cell">D</button>
-                    <button class="key-cell">F</button>
-                    <button class="key-cell">G</button>
-                    <button class="key-cell">H</button>
-                    <button class="key-cell">J</button>
-                    <button class="key-cell">K</button>
-                    <button class="key-cell">L</button>
+                    <button class="key-cell" name="key">A</button>
+                    <button class="key-cell" name="key">S</button>
+                    <button class="key-cell" name="key">D</button>
+                    <button class="key-cell" name="key">F</button>
+                    <button class="key-cell" name="key">G</button>
+                    <button class="key-cell" name="key">H</button>
+                    <button class="key-cell" name="key">J</button>
+                    <button class="key-cell" name="key">K</button>
+                    <button class="key-cell" name="key">L</button>
                 </div>
                 <div class="keyboard-row">
-                    <button class="key-cell">ENTER</button>
-                    <button class="key-cell">Z</button>
-                    <button class="key-cell">X</button>
-                    <button class="key-cell">C</button>
-                    <button class="key-cell">V</button>
-                    <button class="key-cell">B</button>
-                    <button class="key-cell">N</button>
-                    <button class="key-cell">M</button>
-                    <i class="fa-solid fa-delete-left key-cell"></i>
+                    <button class="key-cell" name="enter">ENTER</button>
+                    <button class="key-cell" name="key">Z</button>
+                    <button class="key-cell" name="key">X</button>
+                    <button class="key-cell" name="key">C</button>
+                    <button class="key-cell" name="key">V</button>
+                    <button class="key-cell" name="key">B</button>
+                    <button class="key-cell" name="key">N</button>
+                    <button class="key-cell" name="key">M</button>
+                    <i class="fa-solid fa-delete-left key-cell" name="delete"></i>
                 </div>
             </div>
         </div>
@@ -149,6 +210,11 @@
         border: 2px solid #d3d3d3;
     }
 
+    .letter-cell h1 {
+        padding-top: 0.3em;
+        padding-bottom: 0.3em;
+    }
+
     .keyboard-grid {
         width: 90%;
         margin: 0 auto;
@@ -171,10 +237,38 @@
         background-color: #d3d3d3;
         border: 1px solid #d3d3d3;
         border-radius: 3px;
+        font-weight: bold;
     }
 
     i.key-cell {
         height: 1.7em;
         padding-top: 1em;
+    }
+
+    .green {
+        background-color: #6aaa64;
+        border-color: #6aaa64;
+    }
+
+    .green h1 {
+        color: #fff;
+    }
+
+    .orange {
+        background-color: #c9b458;
+        border-color: #c9b458;
+    }
+
+    .orange h1 {
+        color: #fff;
+    }
+
+    .gray {
+        background-color: #86888a;
+        border-color: #86888a;
+    }
+
+    .gray h1 {
+        color: #fff;
     }
 </style>

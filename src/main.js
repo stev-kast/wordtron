@@ -1,9 +1,10 @@
 // Librerías
 const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const url = require("url");
+const fs = require("fs");
 const path = require("path");
 
-let logInWindow;
+const link = path.join(__dirname, "./js/users.json");
 
 const templateMenu = [
   //-------------------------------
@@ -21,9 +22,48 @@ const templateMenu = [
   },
 ];
 
+// ------------------------------------------
+const readUsers = async () => {
+  if (fs.existsSync(link)) {
+    let archivo = fs.readFileSync(link, "utf8");
+    let users = JSON.parse(archivo);
+    return await users;
+  }
+};
+const getActiveUser = async () => {
+  let data = await readUsers();
+  // Crea el archivo de datos si no existe
+  if (data === undefined) {
+    data = {
+      users: [],
+      statics: [],
+      activeUser: null,
+    };
+
+    let cadena = JSON.stringify(data);
+    fs.writeFileSync(link, cadena);
+  }
+  return await data.activeUser;
+};
+
+const updateActiveUser = async (user) => {
+  let data = await readUsers();
+  data.activeUser = user;
+  let cadena = JSON.stringify(data);
+  fs.writeFileSync(link, cadena);
+};
+
+let active_user = null;
+// ------------------------------------------
+
 // Evento "ready" de la aplicación
-app.on("ready", () => {
-  openLogin();
+app.on("ready", async () => {
+  active_user = await getActiveUser();
+  if (active_user === null) {
+    openLogin();
+  } else {
+    openGame();
+  }
   // Escucha el evento abrir ventana de registro
   ipcMain.on("openRegister", (e, data) => {
     e.sender.destroy();
@@ -31,11 +71,13 @@ app.on("ready", () => {
   });
   // Escucha el evento abrir ventana de logIn
   ipcMain.on("openLogin", (e, data) => {
+    updateActiveUser(null);
     e.sender.destroy();
     openLogin();
   });
   // Escucha el evento abrir ventana de Game
   ipcMain.on("openGame", (e, data) => {
+    updateActiveUser(data.user);
     e.sender.destroy();
     openGame();
   });
@@ -121,3 +163,4 @@ const openGame = async () => {
     })
   );
 };
+//-----------------

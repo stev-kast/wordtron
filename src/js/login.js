@@ -3,7 +3,7 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const { ipcRenderer } = require("electron");
 
-const link = path.join(__dirname, "users.json");
+const link = path.join(__dirname, "../js/users.json");
 
 document.getElementById("signup").addEventListener("click", function (e) {
   ipcRenderer.send("openRegister");
@@ -43,7 +43,7 @@ async function login() {
       );
       let user = datos.users[ind]; // Guarda el usuario con el username que se encontro
       if (bcrypt.compareSync(account.passwd, user.passwd)) {
-        ipcRenderer.send("openGame");
+        ipcRenderer.send("openGame", { user: user.username });
       } else {
         alert("Invalid credentials");
         return false;
