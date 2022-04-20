@@ -6,21 +6,25 @@ const link = path.join(__dirname, "../js/users.json");
 
 const dictionary = path.join(__dirname, "../js/dictionary.json"); // Diccionario mas comun ESPAÑOL
 
-let letter_count = 0; // Helps to avoid entering more than five letters before validating the word
+let letter_count = 0; // Helps to avoid entering more than five keyboard before validating the word
 let active_row = 0; // helps verify what row are we working on
 let word = null; //This is the word to find in the game
-let colors = []; // saves color indicator for each cell
-let letters = [];
+let game_cells = []; // saves color indicator for each cell
+let keyboard = [];
 
 document.getElementById("logOut").addEventListener("click", function (e) {
   e.preventDefault();
   ipcRenderer.send("openLogin");
 });
+document.getElementById("new-game").addEventListener("click", function (e) {
+  location.reload();
+});
+
 document.getElementsByName("delete")[0].addEventListener("click", (e) => {
   let cells = document.getElementsByClassName("letter-cell");
   cells = Object.values(cells);
   let finder = active_row * 5 - 1;
-  if (active_row < 5) {
+  if (active_row < 6) {
     for (let i = 5; i > 0; i--) {
       if (cells[finder + i].children[0].innerHTML !== "") {
         cells[finder + i].children[0].innerHTML = "";
@@ -34,7 +38,7 @@ document.getElementsByName("enter")[0].addEventListener("click", (e) => {
   let cells = document.getElementsByClassName("letter-cell");
   cells = Object.values(cells);
   let input = "";
-  if (active_row < 5) {
+  if (active_row < 6) {
     for (let i = active_row * 5; i < active_row * 5 + 5; i++) {
       input = input + cells[i].children[0].innerHTML;
     }
@@ -116,53 +120,57 @@ const compare_words = async (input, word) => {
   for (let j = 0; j < 5; j++) {
     if (input.charAt(j) == word.charAt(j)) {
       // --- Extra logic to avoid redundance: Si anteriormente ya se marco la letra con indicador 1 se remueve este dato para ahora indicar que la letra esta en la posicion correcta
-
       for (let i = 0; i < j; i++) {
-        if (colors[colors.length - 1 - i][0] == input.charAt(j)) {
+        if (game_cells[game_cells.length - 1 - i][0] == input.charAt(j)) {
           if (word.split("").filter((e) => e == input.charAt(j)).length == 1) {
             // Se verifica que la letra este solo una vez en la palabra a encontrar
-            colors[colors.length - 1 - i][1] = 2;
+            game_cells[game_cells.length - 1 - i][1] = 2;
           }
         }
       }
       // ----------
-      colors.push([input.charAt(j), 0]);
-      let ind = letters.findIndex((e) => e[0] == input.charAt(j));
+      game_cells.push([input.charAt(j), 0]);
+      let ind = keyboard.findIndex((e) => e[0] === input.charAt(j));
       // Si la letra en la posicion j de input es igual a la letra en la posicion j de word se guarda como un 0
-      letters[ind][1] = 0;
+      keyboard[ind][1] = 0;
       wordChecker++;
     } else if (word.split("").some((e) => e == input.charAt(j))) {
       // --- Extra logic to avoid redundance: Se verifica si la palabra contiene dos o mas veces la palabra a encontrar para guardar estos datos correctamente.
       let count = 0;
       for (let i = 0; i < j; i++) {
-        if (colors[colors.length - 1 - i][0] == input.charAt(j)) {
+        if (game_cells[game_cells.length - 1 - i][0] == input.charAt(j)) {
           count++;
         }
       }
       if (count < word.split("").filter((e) => e == input.charAt(j)).length) {
-        let ind = letters.findIndex((e) => e[0] == input.charAt(j));
-        if (letters[ind][1] != 0) {
-          letters[ind][1] = 1;
+        let ind = keyboard.findIndex((e) => e[0] == input.charAt(j));
+        if (keyboard[ind][1] != 0) {
+          keyboard[ind][1] = 1;
         }
-        colors.push([input.charAt(j), 1]);
+        game_cells.push([input.charAt(j), 1]);
       } else {
-        let ind = letters.findIndex((e) => e[0] == input.charAt(j));
-        letters[ind][1] = 2;
-        colors.push([input.charAt(j), 2]);
+        let ind = keyboard.findIndex((e) => e[0] == input.charAt(j));
+        if (keyboard[ind][1] != 0 && keyboard[ind][1] != 1) {
+          keyboard[ind][1] = 2;
+        }
+        game_cells.push([input.charAt(j), 2]);
       }
       // --------------
     } else if (word.split("").some((e) => e != input.charAt(j))) {
-      let ind = letters.findIndex((e) => e[0] == input.charAt(j));
-      letters[ind][1] = 2;
-      colors.push([input.charAt(j), 2]);
+      let ind = keyboard.findIndex((e) => e[0] == input.charAt(j));
+      if (keyboard[ind][1] != 0 && keyboard[ind][1] != 1) {
+        keyboard[ind][1] = 2;
+      }
+      game_cells.push([input.charAt(j), 2]);
     }
   }
 
-  await printColors();
+  await print_game_cells_color();
+  await print_keyboard_colors();
 
   if (wordChecker == 5) {
     // Si hay 5 letras en la posicion correctase guarda un arroba para indicar que se ha encontrado la palabra
-    colors.push("@");
+    game_cells.push("@");
     saveStatics(active_row);
     active_row = 7;
     letter_count = 6;
@@ -173,17 +181,34 @@ const compare_words = async (input, word) => {
   letter_count = 0;
 };
 
-const printColors = async () => {
+const print_game_cells_color = async () => {
   let cells = document.getElementsByClassName("letter-cell");
   cells = Object.values(cells);
 
-  for (let i = colors.length - 5; i < colors.length; i++) {
-    if (colors[i][1] === 0) {
+  for (let i = game_cells.length - 5; i < game_cells.length; i++) {
+    if (game_cells[i][1] === 0) {
       cells[i].classList.add("green");
-    } else if (colors[i][1] === 1) {
+    } else if (game_cells[i][1] === 1) {
       cells[i].classList.add("orange");
-    } else if (colors[i][1] === 2) {
+    } else if (game_cells[i][1] === 2) {
       cells[i].classList.add("gray");
+    }
+  }
+};
+
+const print_keyboard_colors = async () => {
+  let keys = document.getElementsByName("key");
+  keys = Object.values(keys);
+  for (let i = 0; i < keyboard.length; i++) {
+    if (keyboard[i][1] === 0) {
+      keys[i].classList.remove("gray");
+      keys[i].classList.remove("orange");
+      keys[i].classList.add("green");
+    } else if (keyboard[i][1] === 1) {
+      keys[i].classList.remove("gray");
+      keys[i].classList.add("orange");
+    } else if (keyboard[i][1] === 2) {
+      keys[i].classList.add("gray");
     }
   }
 };
@@ -214,7 +239,7 @@ async function saveStatics(last) {
 // -------------------------
 const start_game = async () => {
   word = await generate_word();
-  letters = [
+  keyboard = [
     ["Q", 3],
     ["W", 3],
     ["E", 3],
