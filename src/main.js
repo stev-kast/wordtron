@@ -34,6 +34,11 @@ app.on("ready", () => {
     e.sender.destroy();
     openLogin();
   });
+  // Escucha el evento abrir ventana de Game
+  ipcMain.on("openGame", (e, data) => {
+    e.sender.destroy();
+    openGame();
+  });
   // Carga el menu de un template
   const menuPrincipal = Menu.buildFromTemplate(templateMenu);
   Menu.setApplicationMenu(menuPrincipal);
@@ -64,6 +69,8 @@ if (!app.isPackaged) {
 // -------------------------
 const openRegister = async () => {
   registerWindow = new BrowserWindow({
+    // Hiddes menu bar and can be shown with alt key
+    autoHideMenuBar: true,
     width: 400,
     height: 500,
     title: "Wordtron Register",
@@ -79,16 +86,36 @@ const openRegister = async () => {
 };
 
 const openLogin = async () => {
-  registerWindow = new BrowserWindow({
+  loginWindow = new BrowserWindow({
+    // Hiddes menu bar and can be shown with alt key
+    autoHideMenuBar: true,
     width: 400,
     height: 400,
     title: "Wordtron logIn",
     webPreferences: { nodeIntegration: true, contextIsolation: false },
   });
   // Carga del archivo index.html en la ventana
-  registerWindow.loadURL(
+  loginWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, "views/login.html"),
+      protocol: "file",
+      slashes: true,
+    })
+  );
+};
+
+const openGame = async () => {
+  gameWindow = new BrowserWindow({
+    // Hiddes menu bar and can be shown with alt key
+    autoHideMenuBar: true,
+    title: "Wordtron",
+    webPreferences: { nodeIntegration: true, contextIsolation: false },
+  });
+  gameWindow.maximize();
+  // Carga del archivo index.html en la ventana
+  gameWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, "views/game.html"),
       protocol: "file",
       slashes: true,
     })

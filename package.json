@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^18.0.4"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1"
   }
 }
