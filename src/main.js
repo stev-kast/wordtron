@@ -3,12 +3,12 @@ const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const url = require("url");
 const path = require("path");
 
-let ventanaPrincipal;
+let logInWindow;
 
 const templateMenu = [
   //-------------------------------
   {
-    label: "Tareas",
+    label: "File",
     submenu: [
       {
         label: "Salir",
@@ -23,31 +23,20 @@ const templateMenu = [
 
 // Evento "ready" de la aplicación
 app.on("ready", () => {
-  // Creación de la ventana principal
-  ventanaPrincipal = new BrowserWindow({
-    // Hiddes menu bar and can be shown with alt key
-    autoHideMenuBar: true,
-    width: 400,
-    height: 380,
+  openLogin();
+  // Escucha el evento abrir ventana de registro
+  ipcMain.on("openRegister", (e, data) => {
+    e.sender.destroy();
+    openRegister();
   });
-  //TODO: Look how to change title on each window
-  // Carga del archivo index.html en la ventana
-  ventanaPrincipal.loadURL(
-    url.format({
-      pathname: path.join(__dirname, "views/login.html"),
-      protocol: "file",
-      slashes: true,
-    })
-  );
+  // Escucha el evento abrir ventana de logIn
+  ipcMain.on("openLogin", (e, data) => {
+    e.sender.destroy();
+    openLogin();
+  });
   // Carga el menu de un template
   const menuPrincipal = Menu.buildFromTemplate(templateMenu);
   Menu.setApplicationMenu(menuPrincipal);
-
-  // Escucha el evento de cierre de la ventana principal
-  ventanaPrincipal.on("closed", () => {
-    // Cierra la aplicación
-    app.quit();
-  });
 });
 // TODO: Reload causes errors, check why
 
@@ -60,6 +49,7 @@ if (!app.isPackaged) {
     submenu: [
       {
         label: "Mostrar/Ocultar Dev Tools",
+        accelerator: "Ctrl+t",
         click(item, focusedWindow) {
           focusedWindow.toggleDevTools();
         },
@@ -70,3 +60,37 @@ if (!app.isPackaged) {
     ],
   });
 }
+
+// -------------------------
+const openRegister = async () => {
+  registerWindow = new BrowserWindow({
+    width: 400,
+    height: 500,
+    title: "Wordtron Register",
+    webPreferences: { nodeIntegration: true, contextIsolation: false },
+  });
+  registerWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, "views/register.html"),
+      protocol: "file",
+      slashes: true,
+    })
+  );
+};
+
+const openLogin = async () => {
+  registerWindow = new BrowserWindow({
+    width: 400,
+    height: 400,
+    title: "Wordtron logIn",
+    webPreferences: { nodeIntegration: true, contextIsolation: false },
+  });
+  // Carga del archivo index.html en la ventana
+  registerWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, "views/login.html"),
+      protocol: "file",
+      slashes: true,
+    })
+  );
+};
