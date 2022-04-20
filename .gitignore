@@ -1,5 +1,7 @@
 # users data
 users.json**
+# Folder of executables
+release/
 # Logs
 logs
 *.log
