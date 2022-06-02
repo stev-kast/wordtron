@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
 
 const link = path.join(__dirname, "../js/users.json");
 
@@ -18,20 +19,19 @@ function getPercentage(games, victories) {
 
 const main = async () => {
   let data = await readUsers();
-  let stats = await data.statics.filter(
-    (e) => e.username === data.activeUser
-  )[0];
+  user = await axios.get(`http://localhost:3000/statics/username/${data.activeUser}`);
+  let stats = user.data[0].statics;
 
   let gamesCount = 0;
-  for (let i = 0; i < stats.statics.length; i++) {
-    gamesCount = gamesCount + stats.statics[i];
+  for (let i = 0; i < stats.length; i++) {
+    gamesCount = gamesCount + stats[i];
   }
 
   document.getElementById("games-played").innerHTML = gamesCount;
   document.getElementById("winrate").innerHTML =
-    Math.floor(getPercentage(gamesCount, gamesCount - stats.statics[6])) + "%";
+    Math.floor(getPercentage(gamesCount, gamesCount - stats[6])) + "%";
 
-  let max = Math.max(...stats.statics);
+  let max = Math.max(...stats);
 
   for (let i = 0; i < 6; i++) {
     let row = document.createElement("div");
@@ -43,13 +43,13 @@ const main = async () => {
     index.classList.add("index");
 
     let percentage = document.createElement("div");
-    percentage.innerHTML = stats.statics[i];
+    percentage.innerHTML = stats[i];
     percentage.style.width = `${Math.floor(
-      getPercentage(gamesCount, stats.statics[i])
+      getPercentage(gamesCount, stats[i])
     )}%`;
     percentage.style.minWidth = "1em";
     percentage.classList.add("bar");
-    if (stats.statics[i] === max) {
+    if (stats[i] === max) {
       percentage.classList.add("highlight");
     }
 
