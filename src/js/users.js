@@ -15,72 +15,6 @@ const readUsers = async () => {
   }
 };
 
-async function addUser(newUser) {
-  let datos = await readUsers();
-  // Crea el archivo de datos si no existe
-  if (datos === undefined) {
-    datos = {
-      users: [],
-      statics: [],
-    };
-
-    let cadena = JSON.stringify(datos);
-    fs.writeFileSync(link, cadena);
-  }
-
-  // Verifica si el nombre de usuario ya existe
-  if (!datos.users.some((e) => e.username == newUser.username)) {
-    // Si no existe el nombre de usuario, lo agrega al array de usuarios
-
-    //Encriptacion del password
-    const hash = await bcrypt.hashSync(newUser.passwd, saltRounds);
-    newUser.passwd = hash;
-    // Agrega un usuario a la base
-    datos.users.push(newUser);
-    // Pasa de objeto JSON a un string de datos
-    let cadena = JSON.stringify(datos);
-    // Escribe la cadena al archivo datos.JSON
-    fs.writeFileSync(link, cadena);
-    await confirmMessage("Usuario creado exitosamente");
-    return datos;
-  } else {
-    await confirmMessage(
-      "El nombre de usuario ya existe, por favor inicie el registro nuevamente con otro nombre de usuario o ingrese con el nombre de usuario que ya existe"
-    );
-  }
-}
-
-async function login(account) {
-  let datos = await readUsers();
-  if (datos === undefined) {
-    await confirmMessage("No hay usuarios registrados");
-  } else {
-    if (
-      datos.users.some((e) => e.username == account.username) &&
-      datos.users.length > 0
-    ) {
-      // busca si existe el nombre de usuario
-      let ind = await datos.users.findIndex(
-        // busca el index del nombre de usuario en el array de los usuarios
-        (e) => e.username == account.username
-      );
-      let user = datos.users[ind]; // Guarda el usuario con el username que se encontro
-      if (bcrypt.compareSync(account.passwd, user.passwd)) {
-        return true, account.username; // retorna verdadero despues de verificar username and password
-      } else {
-        console.log(
-          "Los datos de ingreso son incorrectos, por favor intente ingresar de nuevo"
-        );
-        return false;
-      }
-    } else {
-      await confirmMessage(
-        "No existe cuenta con este nombre de Usuario, intente ingresar de nuevo o cree una cuenta nueva"
-      );
-    }
-  }
-}
-
 async function saveStatics(username, last) {
   let datos = await readUsers();
   if (datos.statics.some((e) => e.username == username)) {
@@ -150,9 +84,6 @@ function percentage(games, victories) {
 }
 
 module.exports = {
-  readUsers,
-  addUser,
-  login,
   saveStatics,
   showStatics,
 };

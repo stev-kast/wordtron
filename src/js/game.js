@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { ipcRenderer } = require("electron");
+const axios = require("axios");
 
 const link = path.join(__dirname, "../js/users.json");
 
@@ -116,6 +117,10 @@ const readUsers = async () => {
     return users;
   }
 };
+const getStaticsByUsername = async (username) => {
+  let user = await axios.get("http://localhost:3000/statics/username/"+username)
+  return user;
+}
 // ------------ Lee el diccionario de palabras mas comunes
 const readCommon = async () => {
   if (fs.existsSync(dictionary)) {
@@ -265,24 +270,39 @@ const print_keyboard_colors = async () => {
 async function saveStatics(last) {
   let datos = await readUsers();
   let username = datos.activeUser;
-  if (datos.statics.some((e) => e.username == username)) {
-    let ind = await datos.statics.findIndex(
-      // busca el index del nombre de usuario en el array de los statics
-      (e) => e.username == username
-    );
-    datos.statics[ind].statics[last]++;
-    let cadena = JSON.stringify(datos);
-    fs.writeFileSync(link, cadena);
+  userOnStatics = await getStaticsByUsername(username);
+  if (userOnStatics.data.length > 0) {
+    try {
+      user = await axios.get(`http://localhost:3000/statics/username/${username}`);
+      user.data[0].statics[last]++;
+      // Hace la petición al Rest API
+      let respuesta = await axios.put(`http://localhost:3000/statics/username/${username}`,
+        {
+          statics: user.data[0].statics,
+        });
+
+      // Muestra el resultado
+    } catch (error) {
+      console.log(error);
+    }
   } else {
     // Agrega un usuario a la base de estadisticas
     const newUser = {
       username: username,
-      statics: [0, 0, 0, 0, 0, 0, 0],
+      statics: [0, 0, 0, 0, 0, 0, 0]
     };
     newUser.statics[last] = 1;
-    datos.statics.push(newUser);
-    let cadena = JSON.stringify(datos);
-    fs.writeFileSync(link, cadena);
+    try {
+      // Hace la petición al Rest API
+      let respuesta = await axios.post("http://localhost:3000/statics",
+        newUser);
+      // Muestra el resultado
+      alert("Thanks for playing your first game!");
+    } catch (error) {
+      console.log(error);
+    }
+
+
   }
 }
 // -------------------------

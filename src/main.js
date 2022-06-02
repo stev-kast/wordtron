@@ -35,8 +35,6 @@ const getActiveUser = async () => {
   // Crea el archivo de datos si no existe
   if (data === undefined) {
     data = {
-      users: [],
-      statics: [],
       activeUser: null,
     };
 
@@ -47,8 +45,9 @@ const getActiveUser = async () => {
 };
 
 const updateActiveUser = async (user) => {
-  let data = await readUsers();
-  data.activeUser = user;
+  data = {
+      activeUser: user,
+    };
   let cadena = JSON.stringify(data);
   fs.writeFileSync(link, cadena);
 };

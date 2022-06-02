@@ -1,9 +1,5 @@
-const fs = require("fs");
-const path = require("path");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
-
-const link = path.join(__dirname, "../js/users.json");
 
 const saltRounds = 10; // Se usa en la encriptacion del password ?
 
