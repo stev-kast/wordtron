@@ -11,7 +11,7 @@ document.getElementById("submit-btn").addEventListener("click", function (e) {
   login();
 });
 const getUserByUsername = async (username) => {
-  let user = await axios.get("http://localhost:3000/user/username/"+username)
+  let user = await axios.get("https://wordtron-api.herokuapp.com/user/username/"+username)
   return user;
 }
 async function login() {

@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const axios = require("axios");
 
 async function showStatics(username) {
-  user = await axios.get(`http://localhost:3000/statics/username/${username}`);
+  user = await axios.get(`https://wordtron-api.herokuapp.com/statics/username/${username}`);
   let stats = user.data[0].statics;
   if (stats != undefined) {
     let games = 0;

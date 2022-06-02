@@ -14,7 +14,7 @@ document.getElementById("submit-btn").addEventListener("click", function (e) {
 });
 
 const getUserByUsername = async (username) => {
-  let user = await axios.get("http://localhost:3000/user/username/"+username)
+  let user = await axios.get("https://wordtron-api.herokuapp.com/user/username/"+username)
   return user;
 }
 
@@ -33,7 +33,7 @@ async function addUser() {
     // Agrega un usuario a la base
     try {
       // Hace la petición al Rest API
-      let respuesta = await axios.post("http://localhost:3000/user",
+      let respuesta = await axios.post("https://wordtron-api.herokuapp.com/user",
         newUser);
       // Muestra el resultado
       console.log(respuesta);

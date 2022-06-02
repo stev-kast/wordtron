@@ -118,7 +118,7 @@ const readUsers = async () => {
   }
 };
 const getStaticsByUsername = async (username) => {
-  let user = await axios.get("http://localhost:3000/statics/username/"+username)
+  let user = await axios.get("https://wordtron-api.herokuapp.com/statics/username/"+username)
   return user;
 }
 // ------------ Lee el diccionario de palabras mas comunes
@@ -273,10 +273,10 @@ async function saveStatics(last) {
   userOnStatics = await getStaticsByUsername(username);
   if (userOnStatics.data.length > 0) {
     try {
-      user = await axios.get(`http://localhost:3000/statics/username/${username}`);
+      user = await axios.get(`https://wordtron-api.herokuapp.com/statics/username/${username}`);
       user.data[0].statics[last]++;
       // Hace la petición al Rest API
-      let respuesta = await axios.put(`http://localhost:3000/statics/username/${username}`,
+      let respuesta = await axios.put(`https://wordtron-api.herokuapp.com/statics/username/${username}`,
         {
           statics: user.data[0].statics,
         });
@@ -294,7 +294,7 @@ async function saveStatics(last) {
     newUser.statics[last] = 1;
     try {
       // Hace la petición al Rest API
-      let respuesta = await axios.post("http://localhost:3000/statics",
+      let respuesta = await axios.post("https://wordtron-api.herokuapp.com/statics",
         newUser);
       // Muestra el resultado
       alert("Thanks for playing your first game!");

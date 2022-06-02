@@ -19,7 +19,7 @@ function getPercentage(games, victories) {
 
 const main = async () => {
   let data = await readUsers();
-  user = await axios.get(`http://localhost:3000/statics/username/${data.activeUser}`);
+  user = await axios.get(`https://wordtron-api.herokuapp.com/statics/username/${data.activeUser}`);
   let stats = user.data[0].statics;
 
   let gamesCount = 0;
